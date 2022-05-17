@@ -14,12 +14,11 @@ console.log(`Welcome to Currency Converter!
 1 USD equals  0.89 EUR
 1 USD equals  74.36 RUB
 1 USD equals  0.75 GBP
-I can convert USD to these currencies: JPY, EUR, RUB, USD, GBP
-Type the currency you wish to convert: USD`)
+What do you want to convert?`)
 
-function calculate(amount, to) {
-    const res = amount * currencies[to]
-    return res.toFixed(4)
+function calculate(amount, from, to) {
+    const result = amount * currencies[to] / currencies[from]
+    return result.toFixed(4)
 }
 
 function amountCheck() {
@@ -45,7 +44,11 @@ function currencyCheck(data) {
 }
 
 while (true) {
-    const to = currencyCheck('To: > ')
+    let from = currencyCheck('From: > ');
+    if (!from) {
+        break
+    }
+    let to = currencyCheck('To: > ')
     if (!to) {
         break
     }
@@ -53,9 +56,9 @@ while (true) {
     if (!amount) {
         break
     }
-    const result = calculate(amount, to)
-    console.log(`Result: ${amount} USD equals ${result} ${to}`)
-    if (result) {
+    const output = calculate(amount, from, to)
+    console.log(`Result: ${amount} ${from} equals ${output} ${to}`)
+    if (output) {
         break
     }
 }
